@@ -26,7 +26,7 @@ public class Order {
     private Double price;
 
     @PostPersist
-    public void onPostPersist(){
+    public void onPrePersist(){
         System.out.println("********************8order*******************8 : ");
         setStatus("Ordered");
         System.out.println(toString());
@@ -35,34 +35,39 @@ public class Order {
         ordered.setId(this.getId());
         ordered.setItem(this.getItem());
         ordered.setQty(this.getQty());
-//        ordered.setStore(getStore());
-//        ordered.setPrice(getPrice());
         ordered.setStatus(this.getStatus());
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
+
+        try {
+            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+            System.out.println("***** 부하ㅏㅏㅏㅏㅏㅏ *****");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
 
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
         phoneseller.external.Payment payment = new phoneseller.external.Payment();
-        payment.setOrderId(ordered.getId());
-//        payment.setPrice(ordered.getPrice());
+        System.out.println(this.getId());
+        payment.setOrderId(this.getId());
         payment.setProcess("Ordered");
 
         // mappings goes here
          AppApplication.applicationContext.getBean(phoneseller.external.PaymentService.class)
             .pay(payment);
 
-
-
     }
 
     @PostUpdate
     public void onPostUpdate(){
-        System.out.println("*#*#*#*#*# order update *#*#*#*#*#*#*#*#");
-        PayCompleted payCompleted = new PayCompleted();
-        BeanUtils.copyProperties(this, payCompleted);
-        payCompleted.publish();
+//        System.out.println("*#*#*#*#*# order update *#*#*#*#*#*#*#*#");
+//        PayCompleted payCompleted = new PayCompleted();
+//        BeanUtils.copyProperties(this, payCompleted);
+//        payCompleted.publish();
 
     }
 

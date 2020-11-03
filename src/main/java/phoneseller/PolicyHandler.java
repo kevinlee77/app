@@ -59,13 +59,15 @@ public class PolicyHandler{
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCompleted_OrderStatus(@Payload PayCompleted payCompleted){
+        System.out.println("app_policy_paycompleted_status");
         System.out.println(payCompleted.toJson());
         if(payCompleted.isMe()){
-            System.out.println("====================================결제완료 1차====================================");
             if(orderRepository.findById(payCompleted.getOrderId()) != null){
                 System.out.println("====================================결제완료====================================");
                 Order order = orderRepository.findById(payCompleted.getOrderId()).get();
+                System.out.println(payCompleted.getProcess());
                 order.setStatus(payCompleted.getProcess());
+                System.out.println(payCompleted.toJson());
                 orderRepository.save(order);
             }
 
