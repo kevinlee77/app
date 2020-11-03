@@ -8,6 +8,7 @@ C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\Pay
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\OrderController.java
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\OrderRepository.java
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\config\kafka\KafkaProcessor.java
+C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\PayCompleted.java
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\AbstractEvent.java
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\AppApplication.java
 C:\Users\SOPHIE\Desktop\Intensive2\phoneseller\app\src\main\java\phoneseller\external\Payment.java

@@ -32,7 +32,7 @@ public class PolicyHandler{
 
             Optional<Order> orderOptional= orderRepository.findById(shipped.getOrderId());
             Order order = orderOptional.get();
-            order.setStatus("app_policy_shipped 배송시작");
+            order.setStatus("Shipped");
             orderRepository.save(order);
 
             System.out.println("##### listener OrderStatus : " + shipped.toJson());
@@ -50,7 +50,7 @@ public class PolicyHandler{
 
             Optional<Order> orderOptional= orderRepository.findById(payCancelled.getOrderId());
             Order order = orderOptional.get();
-            order.setStatus("app_policy_paycancelled 결제취소");
+            order.setStatus("PayCancelled");
             orderRepository.save(order);
 
             System.out.println("##### listener OrderStatus : " + payCancelled.toJson());

@@ -30,6 +30,15 @@ spring:
         event-out:
           destination: phoneseller
           contentType: application/json
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 610
+
 
 logging:
   level:
@@ -62,3 +71,11 @@ spring:
         event-out:
           destination: phoneseller
           contentType: application/json
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 610

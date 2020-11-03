@@ -26,10 +26,9 @@ public class Order {
     private Double price;
 
     @PostPersist
-    public void onPrePersist(){
-        System.out.println("********************8order*******************8 : ");
+    public void onPostPersist(){
+        System.out.println("******************** Order ******************* ");
         setStatus("Ordered");
-        System.out.println(toString());
 
         Ordered ordered = new Ordered();
         ordered.setId(this.getId());
@@ -38,21 +37,20 @@ public class Order {
         ordered.setStatus(this.getStatus());
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
-
-        try {
-            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-            System.out.println("***** 부하ㅏㅏㅏㅏㅏㅏ *****");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+//
+//        try {
+//            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+//            System.out.println("***** 부하ㅏㅏㅏㅏㅏㅏ *****");
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
 
 
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
         phoneseller.external.Payment payment = new phoneseller.external.Payment();
-        System.out.println(this.getId());
         payment.setOrderId(this.getId());
         payment.setProcess("Ordered");
 
@@ -73,9 +71,8 @@ public class Order {
 
     @PostRemove
     public void onPostRemove(){
+        this.setStatus("OrderCancelled");
         OrderCancelled orderCancelled = new OrderCancelled();
-//        orderCancelled.setId(getId());
-//        orderCancelled.setStatus("Order Cancel");
         BeanUtils.copyProperties(this, orderCancelled);
         orderCancelled.publishAfterCommit();
 
