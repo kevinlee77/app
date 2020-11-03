@@ -7,7 +7,7 @@ public class Ordered extends AbstractEvent {
     private Integer qty;
     private String status;
     private String store;
-    private Long price;
+    private Double price;
 
     public Long getId() {
         return id;
@@ -44,11 +44,23 @@ public class Ordered extends AbstractEvent {
     public void setStore(String store) {
         this.store = store;
     }
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Ordered{" +
+                "id=" + id +
+                ", item='" + item + '\'' +
+                ", qty=" + qty +
+                ", status='" + status + '\'' +
+                ", store='" + store + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

@@ -25,6 +25,11 @@ public class PolicyHandler{
         // 배송이 시작될 때 오더상태 변경
 
         if(shipped.isMe()){
+            System.out.println("!!!!!!!!!!!!!wheneverShipped_OrderStatus!!!!!!!!!!!!!");
+            System.out.println(shipped.getId());
+            System.out.println(shipped.getOrderId());
+            System.out.println(shipped.getProcess());
+
             Optional<Order> orderOptional= orderRepository.findById(shipped.getOrderId());
             Order order = orderOptional.get();
             order.setStatus("app_policy_shipped 배송시작");
@@ -38,6 +43,11 @@ public class PolicyHandler{
         // 결제가 취소될 때 오더상태 변경
 
         if(payCancelled.isMe()){
+            System.out.println("!!!!!!!!!!wheneverPayCancelled_OrderStatus!!!!!!!!!");
+            System.out.println(payCancelled.getId());
+            System.out.println(payCancelled.getOrderId());
+            System.out.println(payCancelled.getProcess());
+
             Optional<Order> orderOptional= orderRepository.findById(payCancelled.getOrderId());
             Order order = orderOptional.get();
             order.setStatus("app_policy_paycancelled 결제취소");
@@ -47,4 +57,19 @@ public class PolicyHandler{
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPayCompleted_OrderStatus(@Payload PayCompleted payCompleted){
+        System.out.println(payCompleted.toJson());
+        if(payCompleted.isMe()){
+            System.out.println("====================================결제완료 1차====================================");
+            if(orderRepository.findById(payCompleted.getOrderId()) != null){
+                System.out.println("====================================결제완료====================================");
+                Order order = orderRepository.findById(payCompleted.getOrderId()).get();
+                order.setStatus(payCompleted.getProcess());
+                orderRepository.save(order);
+            }
+
+        }
+
+    }
 }

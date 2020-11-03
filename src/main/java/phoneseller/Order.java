@@ -1,7 +1,16 @@
 package phoneseller;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.util.MimeTypeUtils;
+import phoneseller.config.kafka.KafkaProcessor;
+import phoneseller.external.Payment;
 
 @Entity
 @Table(name="Order_table")
@@ -16,18 +25,19 @@ public class Order {
     private String store;
     private Double price;
 
-    /*@PostPersist
+    @PostPersist
     public void onPostPersist(){
-        OrderCancelled orderCancelled = new OrderCancelled();
-        BeanUtils.copyProperties(this, orderCancelled);
-        orderCancelled.publishAfterCommit();
+        System.out.println("********************8order*******************8 : ");
+        setStatus("Ordered");
+        System.out.println(toString());
 
-
-    }*/
-
-    @PrePersist
-    public void onPrePersist(){
         Ordered ordered = new Ordered();
+        ordered.setId(this.getId());
+        ordered.setItem(this.getItem());
+        ordered.setQty(this.getQty());
+//        ordered.setStore(getStore());
+//        ordered.setPrice(getPrice());
+        ordered.setStatus(this.getStatus());
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
 
@@ -36,18 +46,31 @@ public class Order {
 
         phoneseller.external.Payment payment = new phoneseller.external.Payment();
         payment.setOrderId(ordered.getId());
+//        payment.setPrice(ordered.getPrice());
         payment.setProcess("Ordered");
 
         // mappings goes here
-        AppApplication.applicationContext.getBean(phoneseller.external.PaymentService.class)
+         AppApplication.applicationContext.getBean(phoneseller.external.PaymentService.class)
             .pay(payment);
 
+
+
+    }
+
+    @PostUpdate
+    public void onPostUpdate(){
+        System.out.println("*#*#*#*#*# order update *#*#*#*#*#*#*#*#");
+        PayCompleted payCompleted = new PayCompleted();
+        BeanUtils.copyProperties(this, payCompleted);
+        payCompleted.publish();
 
     }
 
     @PostRemove
     public void onPostRemove(){
         OrderCancelled orderCancelled = new OrderCancelled();
+//        orderCancelled.setId(getId());
+//        orderCancelled.setStatus("Order Cancel");
         BeanUtils.copyProperties(this, orderCancelled);
         orderCancelled.publishAfterCommit();
 
@@ -98,6 +121,15 @@ public class Order {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", item='" + item + '\'' +
+                ", qty=" + qty +
+                ", status='" + status + '\'' +
+                ", store='" + store + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

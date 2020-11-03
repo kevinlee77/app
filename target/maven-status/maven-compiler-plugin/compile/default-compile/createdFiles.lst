@@ -11,4 +11,5 @@ phoneseller\PolicyHandler.class
 phoneseller\OrderRepository.class
 phoneseller\external\PaymentService.class
 phoneseller\OrderController.class
+phoneseller\PayCompleted.class
 phoneseller\PayCancelled.class
