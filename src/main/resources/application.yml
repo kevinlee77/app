@@ -48,8 +48,8 @@ server:
   port: 8081
 
 api:
-  pay:
-    url: http://localhost:8083
+  url:
+    pay: http://localhost:8083
 ---
 
 spring:
@@ -85,5 +85,5 @@ hystrix:
       execution.isolation.thread.timeoutInMilliseconds: 610
 
 api:
-  pay:
-    url: http://pay:8080
+  url:
+    pay: ${configurl}

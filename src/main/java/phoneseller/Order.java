@@ -65,7 +65,7 @@ public class Order {
         this.setStatus("OrderCancelled");
         OrderCancelled orderCancelled = new OrderCancelled();
         BeanUtils.copyProperties(this, orderCancelled);
-        orderCancelled.publishAfterCommit();
+        orderCancelled.publish();
 
     }
 
