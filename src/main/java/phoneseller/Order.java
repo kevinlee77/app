@@ -37,15 +37,6 @@ public class Order {
         ordered.setStatus(this.getStatus());
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
-//
-//        try {
-//            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-//            System.out.println("***** 부하ㅏㅏㅏㅏㅏㅏ *****");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-
 
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.

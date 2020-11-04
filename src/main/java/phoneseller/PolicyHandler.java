@@ -66,7 +66,7 @@ public class PolicyHandler{
                 System.out.println("====================================결제완료====================================");
                 Order order = orderRepository.findById(payCompleted.getOrderId()).get();
                 System.out.println(payCompleted.getProcess());
-                order.setStatus(payCompleted.getProcess());
+                order.setStatus("Payed");
                 System.out.println(payCompleted.toJson());
                 orderRepository.save(order);
             }
