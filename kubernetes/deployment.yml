@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
-  namespace: pp82
+  namespace: bike
   labels:
     app: app
 spec:
@@ -18,7 +18,7 @@ spec:
       containers:
         - name: app
 #          image: username/app:latest
-          image: admin37.azurecr.io/app:latest
+          image: admin27.azurecr.io/app:latest
           ports:
             - containerPort: 8080
 #          env:

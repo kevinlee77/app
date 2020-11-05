@@ -25,10 +25,10 @@ spring:
       bindings:
         event-in:
           group: app
-          destination: phoneseller
+          destination: bikeseller
           contentType: application/json
         event-out:
-          destination: phoneseller
+          destination: bikeseller
           contentType: application/json
 feign:
   hystrix:
@@ -70,10 +70,10 @@ spring:
       bindings:
         event-in:
           group: app
-          destination: phoneseller
+          destination: bikeseller
           contentType: application/json
         event-out:
-          destination: phoneseller
+          destination: bikeseller
           contentType: application/json
 feign:
   hystrix:
