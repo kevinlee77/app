@@ -24,6 +24,7 @@ public class Order {
     private String status;
     private String store;
     private Double price;
+    private Double point;
 
     @PostPersist
     public void onPostPersist(){
@@ -113,6 +114,13 @@ public class Order {
         this.price = price;
     }
 
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
 
     @Override
     public String toString() {
@@ -121,7 +129,6 @@ public class Order {
                 ", item='" + item + '\'' +
                 ", qty=" + qty +
                 ", status='" + status + '\'' +
-                ", store='" + store + '\'' +
                 ", price=" + price +
                 '}';
     }

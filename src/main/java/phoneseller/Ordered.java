@@ -8,6 +8,7 @@ public class Ordered extends AbstractEvent {
     private String status;
     private String store;
     private Double price;
+    private Double point;
 
     public Long getId() {
         return id;
@@ -52,6 +53,14 @@ public class Ordered extends AbstractEvent {
         this.price = price;
     }
 
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
+
     @Override
     public String toString() {
         return "Ordered{" +
@@ -59,7 +68,6 @@ public class Ordered extends AbstractEvent {
                 ", item='" + item + '\'' +
                 ", qty=" + qty +
                 ", status='" + status + '\'' +
-                ", store='" + store + '\'' +
                 ", price=" + price +
                 '}';
     }

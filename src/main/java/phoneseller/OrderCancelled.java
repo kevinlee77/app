@@ -8,6 +8,7 @@ public class OrderCancelled extends AbstractEvent {
     private String status;
     private String store;
     private Double price;
+    private Double point;
 
     public Long getId() {
         return id;
@@ -51,4 +52,13 @@ public class OrderCancelled extends AbstractEvent {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
+
 }

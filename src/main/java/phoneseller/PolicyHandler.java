@@ -58,6 +58,40 @@ public class PolicyHandler{
     }
 
     @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPromoCompleted_OrderStatus(@Payload PromoCompleted promoCompleted){
+
+        if(promoCompleted.isMe()){
+            System.out.println("!!!!!!!!!!!!!!!!wheneverPromoCompleted_OrderStatus!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println(promoCompleted.getOrderId());
+
+            if(orderRepository.findById(promoCompleted.getOrderId()) != null) {
+                Order order = orderRepository.findById(promoCompleted.getOrderId()).get();
+                order.setPoint(promoCompleted.getPoint());
+                orderRepository.save(order);
+            }
+
+            System.out.println("##### listener OrderStatus : " + promoCompleted.toJson());
+        }
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPromoCancelled_OrderStatus(@Payload PromoCancelled promoCancelled){
+
+        if(promoCancelled.isMe()){
+            System.out.println("!!!!!!!!!!!!!!!!wheneverPromoCancelled_OrderStatus!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println(promoCancelled.getOrderId());
+
+            if(orderRepository.findById(promoCancelled.getOrderId()) != null) {
+                Order order = orderRepository.findById(promoCancelled.getOrderId()).get();
+                order.setPoint(promoCancelled.getPoint());
+                orderRepository.save(order);
+            }
+
+            System.out.println("##### listener OrderStatus : " + promoCancelled.toJson());
+        }
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCompleted_OrderStatus(@Payload PayCompleted payCompleted){
         System.out.println("app_policy_paycompleted_status");
         System.out.println(payCompleted.toJson());
