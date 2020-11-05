@@ -18,7 +18,7 @@ spec:
       containers:
         - name: app
 #          image: username/app:latest
-          image: admin27.azurecr.io/app:latest
+          image: admin270.azurecr.io/app:latest
           ports:
             - containerPort: 8080
 #          env:
