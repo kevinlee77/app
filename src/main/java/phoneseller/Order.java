@@ -44,6 +44,7 @@ public class Order {
 
         phoneseller.external.Payment payment = new phoneseller.external.Payment();
         payment.setOrderId(this.getId());
+        payment.setPrice(this.getPrice());
         payment.setProcess("Ordered");
 
         // mappings goes here
@@ -55,7 +56,6 @@ public class Order {
     @PostUpdate
     public void onPostUpdate(){
         if("cancel".equals(status)){
-
             this.setStatus("OrderCancelled");
             OrderCancelled orderCancelled = new OrderCancelled();
             BeanUtils.copyProperties(this, orderCancelled);
