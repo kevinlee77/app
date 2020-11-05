@@ -54,19 +54,13 @@ public class Order {
 
     @PostUpdate
     public void onPostUpdate(){
-//        System.out.println("*#*#*#*#*# order update *#*#*#*#*#*#*#*#");
-//        PayCompleted payCompleted = new PayCompleted();
-//        BeanUtils.copyProperties(this, payCompleted);
-//        payCompleted.publish();
+        if("cancel".equals(status)){
 
-    }
-
-    @PostRemove
-    public void onPostRemove(){
-        this.setStatus("OrderCancelled");
-        OrderCancelled orderCancelled = new OrderCancelled();
-        BeanUtils.copyProperties(this, orderCancelled);
-        orderCancelled.publish();
+            this.setStatus("OrderCancelled");
+            OrderCancelled orderCancelled = new OrderCancelled();
+            BeanUtils.copyProperties(this, orderCancelled);
+            orderCancelled.publish();
+        }
 
     }
 
